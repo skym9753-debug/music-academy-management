@@ -52,6 +52,7 @@ function LoginForm() {
         </button>
 
         {/* 아이디 찾기 / 비밀번호 찾기 / 회원가입 영역 */}
+        {/* Link to="" : 주소창에 표시되는 글자 */}
         <div className="flex justify-center items-center gap-2 text-sm text-gray-500 font-medium pt-2">
           <Link to="/find-id" className="hover:text-gray-800 transition">아이디 찾기</Link>
           <span className="text-gray-300">|</span>
