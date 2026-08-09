@@ -28,7 +28,7 @@ function LoginForm() {
           </label>
           <input
             type="text"
-            placeholder="아이디를 입력하세요"
+            placeholder="영문, 숫자 4~12자"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
           />
         </div>
@@ -39,7 +39,7 @@ function LoginForm() {
           </label>
           <input
             type="password"
-            placeholder="6자리 이상"
+            placeholder="영문, 숫자 8자리 이상"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
           />
         </div>

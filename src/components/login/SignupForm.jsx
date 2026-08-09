@@ -41,7 +41,7 @@ function SignupForm() {
             <h2 className="text-4xl font-bold text-center text-[#154894] font-['MallangW'] p-2">Youth Music</h2>
 
             <form onSubmit={handleSubmit} className="w-full max-w-xs mx-4 p-5 bg-white rounded-xl shadow-md space-y-3">
-                <h2 className="text-2xl font-bold text-center text-[#154894] font-['KimWildGag'] mb-2">회원가입</h2>
+                <h2 className="text-xl font-bold text-center text-[#154894] font-['KimWildGag'] mb-2">회원가입</h2>
 
                 <div>
                     <label className="block text-xs font-bold text-gray-700 mb-1">이름</label>
@@ -51,7 +51,7 @@ function SignupForm() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="홍길동"
-                        className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                        className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
                     />
                 </div>
 
@@ -64,7 +64,7 @@ function SignupForm() {
                         onChange={handleChange}
                         maxLength={13}
                         placeholder="전화번호 입력(숫자만 입력)"
-                        className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                        className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
                     />
                 </div>
 
@@ -76,7 +76,7 @@ function SignupForm() {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="example@email.com"
-                        className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                        className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
                     />
                 </div>
 
@@ -88,7 +88,7 @@ function SignupForm() {
                         value={formData.id}
                         onChange={handleChange}
                         placeholder="영문, 숫자 4~12자"
-                        className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                        className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
                     />
                 </div>
 
@@ -100,7 +100,7 @@ function SignupForm() {
                         value={formData.pw}
                         onChange={handleChange}
                         placeholder="영문, 숫자 조합 8자 이상"
-                        className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                        className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
                     />
                 </div>
 
@@ -112,13 +112,13 @@ function SignupForm() {
                         value={formData.confirmPw}
                         onChange={handleChange}
                         placeholder="비밀번호 재입력"
-                        className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                        className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
                     />
                 </div>
 
                 <button
                     type="submit"
-                    className="w-full mt-3 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition text-sm"
+                    className="w-full mt-2 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition text-sm"
                 >
                     가입하기
                 </button>
