@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from '../../assets/유스뮤직 로고.png';
 
 function LoginForm() {
   return (
@@ -8,13 +9,18 @@ function LoginForm() {
       <form className="w-full max-w-xs mx-4 p-6 bg-white rounded-xl shadow-md space-y-4">
 
         {/* 프로그램 간략 소개 / 회원가입 */}
-        <div>
-          <label className="block text-lg text-center font-bold text-gray-600">
-            수강생 및 레슨 일지를
-          </label>
-          <label className="block text-lg text-center font-bold text-gray-600">
-            손 쉽게 관리해보세요 :)
-          </label>
+        <div className="flex items-center justify-center gap-7">
+          {/* 로고 이미지 */}
+          <img src={logo} alt="유스뮤직 로고" className="w-14 h-14 object-contain" />
+
+          <div>
+            <label className="block text-lg font-bold text-gray-600">
+              수강생 및 레슨 일지를
+            </label>
+            <label className="block text-lg font-bold text-gray-600">
+              손 쉽게 관리해보세요 :)
+            </label>
+          </div>
         </div>
 
 
