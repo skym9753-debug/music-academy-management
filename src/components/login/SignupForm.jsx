@@ -172,7 +172,7 @@ function SignupForm() {
                         <button
                             type="button"
                             onClick={handleNext}
-                            className="w-full mt-2 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition text-sm"
+                            className="w-full mt-2 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition text-sm cursor-pointer"
                         >
                             다음 단계
                         </button>
@@ -197,8 +197,8 @@ function SignupForm() {
                                             onClick={() => handleCategoryToggle(cat)}
                                             className={`py-2 text-xs font-semibold rounded-lg border transition ${isSelected
                                                 ? 'bg-[#154894] text-white border-[#154894]'
-                                                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
-                                                }`}
+                                                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50 cursor-pointer'
+                                                }`} 
                                         >
                                             {cat}
                                         </button>
@@ -212,7 +212,7 @@ function SignupForm() {
                             <select
                                 onChange={handleSubjectSelect}
                                 defaultValue=""
-                                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894] bg-white text-gray-700"
+                                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894] bg-white text-gray-700 cursor-pointer"
                             >
                                 <option value="" disabled>레슨 과목 선택</option>
                                 <option value="피아노">피아노</option>
@@ -240,13 +240,13 @@ function SignupForm() {
                             <button
                                 type="button"
                                 onClick={() => setStep(1)}
-                                className="w-1/3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-lg transition text-sm"
+                                className="w-1/3 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-lg transition text-sm cursor-pointer"
                             >
                                 이전
                             </button>
                             <button
                                 type="submit"
-                                className="w-2/3 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition text-sm"
+                                className="w-2/3 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition text-sm cursor-pointer"
                             >
                                 가입하기
                             </button>
