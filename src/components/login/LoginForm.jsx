@@ -52,7 +52,7 @@ function LoginForm() {
 
         <button
           type="submit"
-          className="w-full mt-3 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition"
+          className="w-full mt-3 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition cursor-text"
         >
           로 그 인
         </button>
@@ -60,11 +60,11 @@ function LoginForm() {
         {/* 아이디 찾기 / 비밀번호 찾기 / 회원가입 영역 */}
         {/* Link to="" : 주소창에 표시되는 글자 */}
         <div className="flex justify-center items-center gap-2 text-sm text-gray-500 font-medium pt-2">
-          <Link to="/find-id" className="hover:text-gray-800 transition">아이디 찾기</Link>
+          <Link to="/find-id" className="hover:text-gray-800 transition cursor-text">아이디 찾기</Link>
           <span className="text-gray-300">|</span>
-          <Link to="/find-pw" className="hover:text-gray-800 transition">비밀번호 찾기</Link>
+          <Link to="/find-pw" className="hover:text-gray-800 transition cursor-text">비밀번호 찾기</Link>
           <span className="text-gray-300">|</span>
-          <Link to="/signup" className="hover:text-gray-800 font-semibold text-[#154894] transition">회원가입</Link>
+          <Link to="/signup" className="hover:text-gray-800 font-semibold text-[#154894] transition cursor-text">회원가입</Link>
         </div>
 
 
