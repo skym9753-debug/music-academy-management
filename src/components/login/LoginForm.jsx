@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from '../../assets/유스뮤직 로고.png';
 
 function LoginForm() {
   return (
@@ -8,13 +9,18 @@ function LoginForm() {
       <form className="w-full max-w-xs mx-4 p-6 bg-white rounded-xl shadow-md space-y-4">
 
         {/* 프로그램 간략 소개 / 회원가입 */}
-        <div>
-          <label className="block text-lg text-center font-bold text-gray-600">
-            수강생 및 레슨 일지를
-          </label>
-          <label className="block text-lg text-center font-bold text-gray-600">
-            손 쉽게 관리해보세요 :)
-          </label>
+        <div className="flex items-center justify-center gap-7">
+          {/* 로고 이미지 */}
+          <img src={logo} alt="유스뮤직 로고" className="w-14 h-14 object-contain" />
+
+          <div>
+            <label className="block text-lg font-bold text-gray-600">
+              수강생 및 레슨 일지를
+            </label>
+            <label className="block text-lg font-bold text-gray-600">
+              손 쉽게 관리해보세요 :)
+            </label>
+          </div>
         </div>
 
 
@@ -46,7 +52,7 @@ function LoginForm() {
 
         <button
           type="submit"
-          className="w-full mt-3 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition"
+          className="w-full mt-3 py-2 bg-[#154894] hover:bg-[#1853ab] text-white font-semibold rounded-lg transition cursor-pointer"
         >
           로 그 인
         </button>
@@ -54,11 +60,11 @@ function LoginForm() {
         {/* 아이디 찾기 / 비밀번호 찾기 / 회원가입 영역 */}
         {/* Link to="" : 주소창에 표시되는 글자 */}
         <div className="flex justify-center items-center gap-2 text-sm text-gray-500 font-medium pt-2">
-          <Link to="/find-id" className="hover:text-gray-800 transition">아이디 찾기</Link>
+          <Link to="/find-id" className="hover:text-gray-800 transition cursor-pointer">아이디 찾기</Link>
           <span className="text-gray-300">|</span>
-          <Link to="/find-pw" className="hover:text-gray-800 transition">비밀번호 찾기</Link>
+          <Link to="/find-pw" className="hover:text-gray-800 transition cursor-pointer">비밀번호 찾기</Link>
           <span className="text-gray-300">|</span>
-          <Link to="/signup" className="hover:text-gray-800 font-semibold text-[#154894] transition">회원가입</Link>
+          <Link to="/signup" className="hover:text-gray-800 font-semibold text-[#154894] transition cursor-pointer">회원가입</Link>
         </div>
 
 
