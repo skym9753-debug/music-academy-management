@@ -1,11 +1,31 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+// 눈 아이콘(=보이기)
+const EyeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="w-4 h-4">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12c1.274-4.057 5.065-7 9.542-7 4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+);
+
+// 사선 입력된 눈 아이콘(=숨기기)
+const EyeOffIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="w-4 h-4">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+    </svg>
+);
+
 function SignupForm() {
     const [step, setStep] = useState(1);
     const [isCustomSubject, setIsCustomSubject] = useState(false); // 레슨 과목 > 직접 기재 선택 여부
     const [isSubjectOpen, setIsSubjectOpen] = useState(false); // 과목 드롭다운 열림 여부
     const dropdownRef = useRef(null); // 드롭다운 외부 클릭 감지용 Ref
+
+    const [showPw, setShowPw] = useState(false);
+    const [showConfirmPw, setShowConfirmPw] = useState(false);
+
+    const [isIdChecked, setIsIdChecked] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -15,8 +35,11 @@ function SignupForm() {
         pw: '',
         confirmPw: '',
         categories: [], // 복수 선택 배열 ['취미', '전공', '단체']
-        subject: '',    // 수강 과목
+        subject: '', // 레슨 과목
     });
+
+    const idRegex = /^[a-zA-Z0-9]{4,12}$/;
+    const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/;
 
     // 드롭다운 외부 영역 클릭 시 닫기
     useEffect(() => {
@@ -50,6 +73,11 @@ function SignupForm() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === 'id') {
+            setIsIdChecked(false);
+        }
+
         if (name === 'phone') {
             setFormData((prev) => ({ ...prev, [name]: formatPhoneNumber(value) }));
         } else {
@@ -57,10 +85,37 @@ function SignupForm() {
         }
     };
 
+    // 아이디 중복 체크
+    const handleCheckDuplicateId = () => {
+        if (!formData.id) {
+            alert('아이디를 입력해 주세요.');
+            return;
+        }
+        if (!idRegex.test(formData.id)) {
+            alert('아이디는 영문, 숫자 조합 4~12자로 입력해 주세요.');
+            return;
+        }
+
+        alert('사용 가능한 아이디입니다.');
+        setIsIdChecked(true);
+    };
+
     // 1단계 유효성 검사 분리
     const validateStep1 = () => {
         if (!formData.name || !formData.phone || !formData.email || !formData.id || !formData.pw) {
             alert('모든 필수 항목을 입력해 주세요.');
+            return false;
+        }
+        if (!idRegex.test(formData.id)) {
+            alert('아이디 형식이 올바르지 않습니다. (영문, 숫자 4~12자)');
+            return false;
+        }
+        if (!isIdChecked) {
+            alert('아이디 중복확인을 진행해 주세요.');
+            return false;
+        }
+        if (!pwRegex.test(formData.pw)) {
+            alert('비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다.');
             return false;
         }
         if (formData.pw !== formData.confirmPw) {
@@ -112,6 +167,7 @@ function SignupForm() {
                 {/* 1단계: 계정 기본 정보 */}
                 {step === 1 && (
                     <>
+                        {/* 이름 */}
                         <div>
                             <label className="block text-xs font-bold text-gray-700 mb-1">이름</label>
                             <input
@@ -119,11 +175,13 @@ function SignupForm() {
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                placeholder="홍길동"
+                                maxLength={10}
+                                placeholder="홍길동 (최대 10자)"
                                 className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
                             />
                         </div>
 
+                        {/* 전화번호 */}
                         <div>
                             <label className="block text-xs font-bold text-gray-700 mb-1">전화번호</label>
                             <input
@@ -137,6 +195,7 @@ function SignupForm() {
                             />
                         </div>
 
+                        {/* 이메일 */}
                         <div>
                             <label className="block text-xs font-bold text-gray-700 mb-1">이메일</label>
                             <input
@@ -149,40 +208,83 @@ function SignupForm() {
                             />
                         </div>
 
+                        {/* 아이디 */}
                         <div>
                             <label className="block text-xs font-bold text-gray-700 mb-1">아이디</label>
-                            <input
-                                type="text"
-                                name="id"
-                                value={formData.id}
-                                onChange={handleChange}
-                                placeholder="영문, 숫자 4~12자"
-                                className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
-                            />
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    name="id"
+                                    value={formData.id}
+                                    onChange={handleChange}
+                                    maxLength={12}
+                                    placeholder="영문, 숫자 4~12자"
+                                    className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={handleCheckDuplicateId}
+                                    className="shrink-0 px-2.5 py-1 text-xs bg-gray-100 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition"
+                                >
+                                    중복확인
+                                </button>
+                            </div>
                         </div>
 
+                        {/* 비밀번호 */}
                         <div>
                             <label className="block text-xs font-bold text-gray-700 mb-1">비밀번호</label>
-                            <input
-                                type="password"
-                                name="pw"
-                                value={formData.pw}
-                                onChange={handleChange}
-                                placeholder="영문, 숫자 조합 8자 이상"
-                                className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
-                            />
+                            <div className="relative">
+                                <input
+                                    type={showPw ? 'text' : 'password'}
+                                    name="pw"
+                                    value={formData.pw}
+                                    onChange={handleChange}
+                                    placeholder="영문, 숫자 조합 8자 이상"
+                                    className="w-full px-3 py-[4.5px] pr-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPw((prev) => !prev)}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition select-none cursor-pointer"
+                                    aria-label={showPw ? "비밀번호 숨기기" : "비밀번호 보이기"}
+                                >
+                                    {showPw ? <EyeOffIcon /> : <EyeIcon />}
+                                </button>
+                            </div>
+                            {formData.pw && !pwRegex.test(formData.pw) && (
+                                <p className="text-[11px] text-rose-500 mt-1">영문과 숫자를 포함해 8자 이상 입력하세요.</p>
+                            )}
                         </div>
 
+                        {/* 비밀번호 확인 */}
                         <div>
                             <label className="block text-xs font-bold text-gray-700 mb-1">비밀번호 확인</label>
-                            <input
-                                type="password"
-                                name="confirmPw"
-                                value={formData.confirmPw}
-                                onChange={handleChange}
-                                placeholder="비밀번호 재입력"
-                                className="w-full px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
-                            />
+                            <div className="relative">
+                                <input
+                                    type={showConfirmPw ? 'text' : 'password'}
+                                    name="confirmPw"
+                                    value={formData.confirmPw}
+                                    onChange={handleChange}
+                                    placeholder="비밀번호 재입력"
+                                    className="w-full px-3 py-[4.5px] pr-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowConfirmPw((prev) => !prev)}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition select-none cursor-pointer"
+                                    aria-label={showConfirmPw ? "비밀번호 숨기기" : "비밀번호 보이기"}
+                                >
+                                    {showConfirmPw ? <EyeOffIcon /> : <EyeIcon />}
+                                </button>
+                            </div>
+                            {formData.confirmPw && (
+                                formData.pw === formData.confirmPw ? (
+                                    <p className="text-[11px] text-emerald-600 mt-1">비밀번호가 일치합니다.</p>
+                                ) : (
+                                    <p className="text-[11px] text-rose-500 mt-1">비밀번호가 일치하지 않습니다.</p>
+                                )
+                            )}
                         </div>
 
                         <button
@@ -213,7 +315,7 @@ function SignupForm() {
                                             className={`py-2 text-xs font-semibold rounded-lg border transition ${isSelected
                                                 ? 'bg-[#154894] text-white border-[#154894]'
                                                 : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50 cursor-pointer'
-                                            }`}
+                                                }`}
                                         >
                                             {cat}
                                         </button>
@@ -321,9 +423,11 @@ function SignupForm() {
                 </div>
             </form>
 
-            <p className="text-sm text-[#ff2483] text-center mt-3 font-medium">
-                ※가입하기 ➞ 관리자의 승인을 받은 후, 로그인이 가능합니다.
-            </p>
+            {step === 2 && (
+                <p className="text-sm text-[#ff2483] text-center mt-3 font-medium">
+                    ※가입하기 ➞ 관리자의 승인을 받은 후, 로그인이 가능합니다.
+                </p>
+            )}
         </>
     );
 }
