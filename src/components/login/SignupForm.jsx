@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 function SignupForm() {
     const [step, setStep] = useState(1);
-    const [isCustomSubject, setIsCustomSubject] = useState(false); // 직접기재 선택 여부
+    const [isCustomSubject, setIsCustomSubject] = useState(false); // 레슨 과목 > 직접 기재 선택 여부
+    const [isSubjectOpen, setIsSubjectOpen] = useState(false); // 과목 드롭다운 열림 여부 : 예시 숨기기 용
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -189,7 +190,7 @@ function SignupForm() {
                             {/* 3개 한 줄 그리드 배치 */}
                             <div className="grid grid-cols-3 gap-2">
                                 {['취미', '전공', '단체'].map((cat) => {
-                                    const isSelected = formData.categories.includes(cat);
+                                    const isSelected = formData.categories.includes(cat); // 눌린 카테고리 체크
                                     return (
                                         <button
                                             key={cat}
@@ -198,7 +199,7 @@ function SignupForm() {
                                             className={`py-2 text-xs font-semibold rounded-lg border transition ${isSelected
                                                 ? 'bg-[#154894] text-white border-[#154894]'
                                                 : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50 cursor-pointer'
-                                                }`} 
+                                                }`}
                                         >
                                             {cat}
                                         </button>
@@ -207,8 +208,8 @@ function SignupForm() {
                             </div>
                         </div>
 
-                        <div>
-                            <label className="block text-xs font-bold text-gray-700 mb-1">수강 과목</label>
+                        {/* <div>
+                            <label className="block text-xs font-bold text-gray-700 mb-1">레슨 과목</label>
                             <select
                                 onChange={handleSubjectSelect}
                                 defaultValue=""
@@ -220,11 +221,11 @@ function SignupForm() {
                                 <option value="드럼">드럼</option>
                                 <option value="기타">기타</option>
                                 <option value="베이스">베이스</option>
-                                <option value="직접기재">직접 기재 (2개 이상인 경우, 작성해주세요)</option>
-                            </select>
+                                <option value="직접기재">직접 기재 (2개 이상인 경우 작성 ➞ 예시: 피아노/보컬)</option>
+                            </select> */}
 
-                            {/* '직접기재' 선택 시 활성화되는 텍스트 입력창 */}
-                            {isCustomSubject && (
+                        {/* '직접기재' 선택 시 활성화되는 텍스트 입력창 */}
+                        {/* {isCustomSubject && (
                                 <input
                                     type="text"
                                     name="subject"
@@ -232,6 +233,84 @@ function SignupForm() {
                                     onChange={handleChange}
                                     placeholder="과목명을 입력하세요"
                                     className="w-full mt-2 px-3 py-[4.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
+                                />
+                            )}
+                        </div> */}
+
+                        {/* 레슨 과목 선택 드롭다운 */}
+                        <div>
+                            <label className="block text-xs font-bold text-gray-700 mb-1">레슨 과목</label>
+
+                            {/* 레슨 과목 커스텀 드롭다운 */}
+                            <div className="relative">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsSubjectOpen((prev) => !prev)}
+                                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894] bg-white text-gray-700 cursor-pointer text-left flex items-center justify-between"
+                                >
+                                    <span>
+                                        {formData.subject
+                                            ? formData.subject
+                                            : '직접 기재'}
+                                    </span>
+
+                                    {/* 아래쪽 화살표 */}
+                                    <span className="text-gray-600 text-base">
+                                        {isSubjectOpen ? '⏶' : '⏷'}
+                                    </span>
+                                </button>
+
+                                {/* 드롭다운 목록 */}
+                                {isSubjectOpen && (
+                                    <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden">
+
+                                        {/* 기본 과목 */}
+                                        {['피아노', '보컬', '드럼', '기타', '베이스'].map((subject) => (
+                                            <button
+                                                key={subject}
+                                                type="button"
+                                                onClick={() => {
+                                                    setIsCustomSubject(false);
+                                                    setFormData((prev) => ({
+                                                        ...prev,
+                                                        subject: subject
+                                                    }));
+                                                    setIsSubjectOpen(false);
+                                                }}
+                                                className="w-full px-3 py-2 text-sm text-left text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                            >
+                                                {subject}
+                                            </button>
+                                        ))}
+
+                                        {/* 직접 기재 */}
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setIsCustomSubject(true);
+                                                setFormData((prev) => ({
+                                                    ...prev,
+                                                    subject: ''
+                                                }));
+                                                setIsSubjectOpen(false);
+                                            }}
+                                            className="w-full px-3 py-2 text-sm text-left text-gray-700 hover:bg-gray-50 cursor-pointer"
+                                        >
+                                            직접 기재 (2개 이상인 경우 ➞ 예시: 피아노/보컬)
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* '직접 기재' 선택 시 활성화되는 텍스트 입력창 */}
+                            {isCustomSubject && (
+                                <input
+                                    type="text"
+                                    name="subject"
+                                    value={formData.subject}
+                                    onChange={handleChange}
+                                    placeholder="과목명을 입력하세요"
+                                    className="w-full mt-2 px-3 py-[8.5px] text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#154894]"
                                 />
                             )}
                         </div>
@@ -261,6 +340,10 @@ function SignupForm() {
                     </Link>
                 </div>
             </form>
+
+            <p className="text-sm text-red-500 text-center mt-3 font-medium">
+                ※ 가입하기 ➞ 관리자의 승인을 받은 후, 로그인이 가능합니다.
+            </p>
         </>
     );
 }
